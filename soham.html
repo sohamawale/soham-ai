@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My AI Chat</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #0f172a;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    header {
+        background-color: #111827;
+        padding: 15px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        border-bottom: 1px solid #1f2937;
+    }
+
+    .chat-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .message {
+        max-width: 70%;
+        padding: 12px 15px;
+        border-radius: 15px;
+        line-height: 1.4;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .user {
+        align-self: flex-end;
+        background-color: #2563eb;
+    }
+
+    .bot {
+        align-self: flex-start;
+        background-color: #1f2937;
+    }
+
+    .input-area {
+        display: flex;
+        padding: 15px;
+        background-color: #111827;
+        border-top: 1px solid #1f2937;
+    }
+
+    input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+    }
+
+    button {
+        margin-left: 10px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        background-color: #2563eb;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #1d4ed8;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(5px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+</style>
+</head>
+<body>
+
+<header>My AI Assistant</header>
+
+<div class="chat-container" id="chatContainer">
+    <div class="message bot">Hello 👋 I'm your AI assistant. Ask me anything!</div>
+</div>
+
+<div class="input-area">
+    <input type="text" id="userInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+function sendMessage() {
+    const input = document.getElementById("userInput");
+    const message = input.value.trim();
+    if (message === "") return;
+
+    const chatContainer = document.getElementById("chatContainer");
+
+    // User message
+    const userMsg = document.createElement("div");
+    userMsg.className = "message user";
+    userMsg.textContent = message;
+    chatContainer.appendChild(userMsg);
+
+    input.value = "";
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    // Fake AI response
+    setTimeout(() => {
+        const botMsg = document.createElement("div");
+        botMsg.className = "message bot";
+        botMsg.textContent = generateResponse(message);
+        chatContainer.appendChild(botMsg);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }, 800);
+}
+
+function generateResponse(userText) {
+    // Simple demo responses
+    if (userText.toLowerCase().includes("hello")) {
+        return "Hi there! 😊 How can I help you today?";
+    } else if (userText.toLowerCase().includes("how are you")) {
+        return "I'm just code, but I'm running perfectly! 🚀";
+    } else {
+        return "That's interesting! Tell me more about it.";
+    }
+}
+
+// Press Enter to send
+document.getElementById("userInput").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        sendMessage();
+    }
+});
+</script>
+
+</body>
+</html>
